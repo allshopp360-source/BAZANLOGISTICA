@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bazán Logística – Fletes, Mudanzas y Grúas en Paraguay</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0A2463;
+    --secondary: #1A3A7C;
+    --accent: #F4A261;
+    --accent2: #E63946;
+    --light: #F8F9FC;
+    --white: #ffffff;
+    --gray: #6B7280;
+    --dark: #111827;
+    --border: #E5E7EB;
+    --success: #10B981;
+    --card-shadow: 0 4px 24px rgba(10,36,99,0.10);
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--light); color: var(--dark); }
+
+  /* ===== NAV ===== */
+  nav {
+    background: var(--primary);
+    padding: 0 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px; position: sticky; top: 0; z-index: 300;
+    box-shadow: 0 2px 16px rgba(10,36,99,0.18);
+  }
+  .nav-logo {
+    font-family: var(--font-display); font-size: 1.5rem; font-weight: 800;
+    color: #fff; letter-spacing: -0.5px; cursor: pointer;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo .logo-icon { font-size: 1.3rem; }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: rgba(255,255,255,0.8); text-decoration: none;
+    font-size: 0.92rem; font-weight: 500;
+    transition: color .2s; cursor: pointer;
+  }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta {
+    background: var(--accent2); color: #fff; border: none;
+    padding: 10px 22px; border-radius: 8px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.88rem;
+    cursor: pointer; transition: background .2s;
+  }
+  .nav-cta:hover { background: #c0303b; }
+  .nav-hamburger { display: none; background: none; border: none; cursor: pointer; color: #fff; font-size: 1.5rem; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: block; }
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #1a3a7c 60%, #0d1b4a 100%);
+    padding: 80px 5% 90px;
+    position: relative; overflow: hidden;
+    display: flex; align-items: center; gap: 60px; flex-wrap: wrap;
+  }
+  .hero::before {
+    content: ''; position: absolute; right: -80px; top: -80px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(244,162,97,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-content { flex: 1; min-width: 280px; z-index: 1; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(244,162,97,0.18); color: var(--accent);
+    border: 1px solid rgba(244,162,97,0.35);
+    padding: 5px 14px; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800; color: #fff; line-height: 1.15; margin-bottom: 20px;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero h1 em { color: var(--accent2); font-style: normal; }
+  .hero p { color: rgba(255,255,255,0.72); font-size: 1.05rem; line-height: 1.7; max-width: 480px; margin-bottom: 36px; }
+  .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--accent2); color: #fff; border: none;
+    padding: 14px 28px; border-radius: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-primary:hover { background: #c0303b; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: #fff;
+    border: 2px solid rgba(255,255,255,0.35);
+    padding: 14px 28px; border-radius: 10px;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.95rem;
+    cursor: pointer; transition: all .2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-visual { flex: 0 0 auto; z-index: 1; display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stat-card {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 20px 24px; text-align: center;
+  }
+  .stat-num {
+    font-family: var(--font-display); font-size: 2rem; font-weight: 800;
+    color: var(--accent); line-height: 1;
+  }
+  .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+  .trust-strip {
+    background: var(--secondary);
+    padding: 14px 5%;
+    display: flex; align-items: center; gap: 32px; flex-wrap: wrap; justify-content: center;
+    border-top: 3px solid var(--accent);
+  }
+  .trust-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.88rem; font-weight: 500; color: rgba(255,255,255,0.75);
+  }
+  .trust-item .ti-icon { font-size: 1rem; }
+
+  /* ===== PAGES ===== */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ===== SECTIONS ===== */
+  section { padding: 70px 5%; }
+  .section-label {
+    font-size: 0.78rem; font-weight: 600; color: var(--accent2);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    text-align: center; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-display); font-size: 1.8rem; font-weight: 800;
+    color: var(--primary); text-align: center; margin-bottom: 8px;
+  }
+  .section-sub { text-align: center; color: var(--gray); font-size: 0.98rem; margin-bottom: 48px; }
+
+  /* ===== SERVICES ===== */
+  .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .service-card {
+    background: var(--white); border-radius: 12px; padding: 36px 30px;
+    box-shadow: var(--card-shadow); cursor: pointer;
+    transition: all .28s; border: 2px solid transparent;
+    position: relative; overflow: hidden;
+  }
+  .service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    transform: scaleX(0); transform-origin: left; transition: transform .3s;
+  }
+  .service-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(10,36,99,0.15); border-color: var(--primary); }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-icon-wrap {
+    width: 60px; height: 60px; background: var(--primary); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.9rem; margin-bottom: 18px;
+    transition: background .2s;
+  }
+  .service-card:hover .service-icon-wrap { background: var(--accent2); }
+  .service-card h3 {
+    font-family: var(--font-display); font-size: 1.08rem; font-weight: 700;
+    color: var(--primary); margin-bottom: 8px;
+  }
+  .service-card p { color: var(--gray); font-size: 0.88rem; line-height: 1.6; margin-bottom: 20px; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .tag {
+    background: #EEF2FF; color: var(--primary); font-size: 0.72rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+  }
+  .btn-service {
+    width: 100%; background: var(--primary); color: #fff; border: none;
+    padding: 11px; border-radius: 8px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.88rem;
+    cursor: pointer; transition: background .2s;
+  }
+  .btn-service:hover { background: #0d1e4f; }
+
+  /* ===== HOW IT WORKS ===== */
+  .how-section { background: var(--white); }
+  .how-section .section-title { color: var(--primary); }
+  .how-section .section-sub { color: var(--gray); }
+  .steps { display: flex; gap: 0; flex-wrap: wrap; justify-content: center; position: relative; }
+  .steps::before {
+    content: ''; position: absolute; top: 40px; left: 15%; right: 15%; height: 2px;
+    background: linear-gradient(90deg, var(--primary), var(--accent2)); z-index: 0;
+  }
+  .step { flex: 1; min-width: 180px; max-width: 240px; text-align: center; padding: 0 16px; position: relative; z-index: 1; }
+  .step-num {
+    width: 80px; height: 80px; background: var(--primary); color: #fff;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-size: 1.6rem; font-weight: 800;
+    margin: 0 auto 20px; border: 4px solid var(--white);
+    box-shadow: 0 4px 16px rgba(10,36,99,0.2);
+  }
+  .step h4 { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+  .step p { font-size: 0.82rem; color: var(--gray); line-height: 1.5; }
+
+  /* ===== WHY US ===== */
+  .why-section { background: var(--light); }
+  .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .why-card {
+    background: var(--white); border-radius: 16px; padding: 28px 24px;
+    box-shadow: var(--card-shadow); transition: all .25s;
+    border: 2px solid transparent;
+  }
+  .why-card:hover { border-color: var(--primary); transform: translateY(-4px); }
+  .why-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+  .why-card h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+  .why-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+  /* ===== FOOTER ===== */
+  .footer { background: var(--primary); padding: 30px 5%; }
+  .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+  .footer-logo { font-family: var(--font-display); font-size: 1.3rem; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+  .footer-logo span { color: var(--accent); }
+  .footer-info { color: rgba(255,255,255,0.45); font-size: 0.82rem; text-align: center; }
+  .footer-contact { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .footer-wa { display: inline-flex; align-items: center; gap: 8px; color: var(--accent); font-size: 0.88rem; font-weight: 600; text-decoration: none; }
+
+  /* ===== PROVIDER LISTING PAGE ===== */
+  .provider-page { background: var(--light); min-height: 100vh; }
+  .provider-header {
+    background: linear-gradient(135deg, var(--primary), #1a3a7c);
+    padding: 36px 5% 32px; color: #fff;
+  }
+  .back-btn {
+    background: rgba(255,255,255,0.15); border: none;
+    color: #fff; padding: 8px 16px; border-radius: 8px; cursor: pointer;
+    font-family: var(--font-display); font-size: 0.85rem; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 6px; margin-bottom: 18px;
+    transition: background .2s;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.25); }
+  .provider-header h2 { font-family: var(--font-display); font-size: 1.7rem; font-weight: 800; margin-bottom: 6px; }
+  .provider-header p { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+
+  .provider-filters {
+    padding: 20px 5%; background: var(--white);
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-label { font-size: 0.82rem; font-weight: 600; color: var(--gray); }
+  .filter-btn {
+    padding: 7px 16px; border-radius: 20px; border: 2px solid var(--border);
+    background: var(--white); font-family: var(--font-display); font-size: 0.8rem;
+    font-weight: 600; cursor: pointer; transition: all .2s; color: var(--dark);
+  }
+  .filter-btn.active, .filter-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+  .providers-grid { padding: 30px 5%; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+  .provider-card {
+    background: var(--white); border-radius: 16px; overflow: hidden;
+    box-shadow: var(--card-shadow); transition: all .25s; border: 2px solid transparent;
+  }
+  .provider-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(10,36,99,0.15); border-color: var(--primary); }
+  .provider-card-img {
+    height: 160px;
+    background: linear-gradient(135deg, #1a3a7c, #0d1b4a);
+    display: flex; align-items: center; justify-content: center; font-size: 4rem; position: relative;
+  }
+  .provider-badge-verified {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--success); color: #fff; font-size: 0.7rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 20px; font-family: var(--font-display);
+  }
+  .provider-card-body { padding: 20px; }
+  .provider-card-body h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+  .provider-meta { font-size: 0.8rem; color: var(--gray); margin-bottom: 10px; }
+  .stars-row { display: flex; align-items: center; gap: 7px; margin-bottom: 10px; }
+  .stars { color: #F59E0B; font-size: 1rem; letter-spacing: 1px; }
+  .stars-count { font-size: 0.8rem; color: var(--gray); }
+  .provider-vehicles { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .vehicle-tag { background: #EEF2FF; color: var(--primary); font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .provider-price { font-size: 0.85rem; color: var(--gray); margin-bottom: 14px; }
+  .provider-price strong { color: var(--dark); }
+  .provider-card-actions { display: flex; gap: 8px; }
+  .btn-ver-perfil { flex: 1; background: var(--primary); color: #fff; border: none; padding: 10px; border-radius: 8px; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: background .2s; }
+  .btn-ver-perfil:hover { background: #0d1e4f; }
+  .btn-wa-small { background: #25D366; color: #fff; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; transition: background .2s; font-size: 1rem; }
+  .btn-wa-small:hover { background: #1ebe5a; }
+
+  /* ===== PROVIDER DETAIL PAGE ===== */
+  .detail-header {
+    background: linear-gradient(135deg, var(--primary), #1a3a7c);
+    padding: 36px 5% 40px; color: #fff;
+  }
+  .detail-company-info { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 16px; }
+  .detail-company-avatar { width: 80px; height: 80px; background: rgba(255,255,255,0.15); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; border: 2px solid rgba(255,255,255,0.3); }
+  .detail-company-text h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; }
+  .detail-company-text p { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 4px; }
+  .detail-badges { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .badge { padding: 4px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 700; font-family: var(--font-display); }
+  .badge-verified { background: var(--success); color: #fff; }
+  .badge-years { background: rgba(244,162,97,0.25); color: var(--accent); border: 1px solid rgba(244,162,97,0.4); }
+
+  .detail-content { padding: 30px 5%; display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+  @media (max-width: 768px) { .detail-content { grid-template-columns: 1fr; } }
+  .detail-section { background: var(--white); border-radius: 16px; padding: 24px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
+  .detail-section h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 800; color: var(--primary); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+
+  .vehicles-list { display: flex; flex-direction: column; gap: 12px; }
+  .vehicle-item { border: 2px solid var(--border); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; transition: border .2s; cursor: pointer; }
+  .vehicle-item:hover, .vehicle-item.selected { border-color: var(--primary); background: #EEF2FF; }
+  .vehicle-icon { font-size: 2rem; flex-shrink: 0; }
+  .vehicle-info { flex: 1; }
+  .vehicle-info h4 { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; color: var(--dark); }
+  .vehicle-info p { font-size: 0.78rem; color: var(--gray); margin-top: 2px; }
+  .vehicle-price { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; color: var(--primary); white-space: nowrap; }
+
+  .reviews-summary { display: flex; align-items: center; gap: 24px; padding: 16px; background: #F8F9FC; border-radius: 12px; margin-bottom: 20px; }
+  .review-big-score { font-family: var(--font-display); font-size: 3rem; font-weight: 800; color: var(--primary); line-height: 1; }
+  .review-breakdown { flex: 1; }
+  .review-bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .review-bar-label { font-size: 0.75rem; color: var(--gray); width: 16px; text-align: right; }
+  .review-bar-bg { flex: 1; height: 6px; background: var(--border); border-radius: 3px; }
+  .review-bar-fill { height: 100%; border-radius: 3px; background: #F59E0B; }
+  .review-bar-count { font-size: 0.72rem; color: var(--gray); width: 24px; }
+  .reviews-list { display: flex; flex-direction: column; gap: 16px; }
+  .review-item { border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .review-item-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+  .review-user { display: flex; align-items: center; gap: 10px; }
+  .review-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--primary); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; flex-shrink: 0; }
+  .review-user-info h5 { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--dark); }
+  .review-user-info span { font-size: 0.75rem; color: var(--gray); }
+  .review-stars { color: #F59E0B; font-size: 0.9rem; }
+  .review-text { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
+
+  /* Sidebar cards */
+  .sidebar-cta-card { background: var(--primary); border-radius: 16px; padding: 28px; margin-bottom: 20px; text-align: center; position: sticky; top: 82px; }
+  .sidebar-cta-card h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 800; color: #fff; margin-bottom: 8px; }
+  .sidebar-cta-card p { color: rgba(255,255,255,0.6); font-size: 0.85rem; margin-bottom: 20px; line-height: 1.5; }
+  .btn-wa-large {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: #25D366; color: #fff; border: none; padding: 14px 20px; border-radius: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.95rem; cursor: pointer;
+    transition: all .2s; width: 100%;
+  }
+  .btn-wa-large:hover { background: #1ebe5a; transform: translateY(-2px); }
+  .sidebar-info-card { background: var(--white); border-radius: 16px; padding: 22px; box-shadow: var(--card-shadow); margin-bottom: 20px; }
+  .sidebar-info-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .sidebar-info-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .sidebar-info-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+  .sidebar-info-label { font-size: 0.75rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  .sidebar-info-val { font-size: 0.9rem; color: var(--dark); font-weight: 600; margin-top: 2px; }
+
+  /* ===== MODAL ===== */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(10,36,99,0.6);
+    display: none; align-items: center; justify-content: center;
+    z-index: 999; padding: 20px; backdrop-filter: blur(4px);
+  }
+  .modal-overlay.active { display: flex; }
+  .modal {
+    background: var(--white); border-radius: 16px; width: 100%; max-width: 600px;
+    max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 60px rgba(10,36,99,0.25);
+  }
+  .modal-header {
+    padding: 24px 28px 20px; display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 2px solid var(--border); position: sticky; top: 0; background: var(--white); z-index: 10;
+  }
+  .modal-header h2 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--primary); }
+  .service-name { color: var(--accent2); }
+  .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--gray); padding: 4px 8px; border-radius: 6px; transition: all .2s; }
+  .modal-close:hover { background: var(--light); color: var(--dark); }
+  .modal-body { padding: 24px 28px; }
+
+  .tabs { display: flex; gap: 0; margin-bottom: 24px; border-bottom: 2px solid var(--border); }
+  .tab-btn { flex: 1; padding: 11px 16px; border: none; background: none; cursor: pointer; font-family: var(--font-display); font-size: 0.9rem; font-weight: 600; color: var(--gray); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all .2s; }
+  .tab-btn.active { color: var(--primary); border-bottom-color: var(--accent2); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--primary); margin-bottom: 6px; }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%; padding: 11px 14px; border: 2px solid var(--border);
+    border-radius: 9px; font-family: var(--font-body); font-size: 0.92rem; color: var(--dark);
+    transition: border .2s; background: var(--white);
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--primary); }
+  .form-group textarea { min-height: 100px; resize: vertical; }
+
+  .whatsapp-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    width: 100%; background: #25D366; color: #fff; border: none;
+    padding: 15px 20px; border-radius: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+    cursor: pointer; transition: all .2s; margin-top: 8px;
+  }
+  .whatsapp-btn svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+  .whatsapp-btn:hover { background: #1ebe5a; transform: translateY(-1px); }
+  .modal-note { font-size: 0.78rem; color: var(--gray); text-align: center; margin-top: 10px; line-height: 1.5; }
+
+  /* ===== MUDANZA MODAL ===== */
+  .mudanza-overlay {
+    position: fixed; inset: 0; background: rgba(10,36,99,0.65);
+    display: none; align-items: flex-start; justify-content: center;
+    z-index: 1000; padding: 20px; overflow-y: auto; backdrop-filter: blur(4px);
+  }
+  .mudanza-overlay.active { display: flex; }
+  .mudanza-modal {
+    background: var(--white); border-radius: 16px; width: 100%; max-width: 640px;
+    margin: auto; box-shadow: 0 24px 60px rgba(10,36,99,0.25);
+    border-top: 4px solid var(--accent);
+  }
+  .mudanza-modal-header {
+    padding: 22px 28px 18px; display: flex; align-items: center; gap: 14px;
+    border-bottom: 2px solid var(--border); background: var(--white); border-radius: 16px 16px 0 0;
+  }
+  .service-emoji { font-size: 2rem; }
+  .mudanza-modal-header h2 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 800; color: var(--primary); flex: 1; }
+  .mudanza-modal-body { padding: 24px 28px; }
+  .mudanza-section-title { font-family: var(--font-display); font-size: 0.88rem; font-weight: 700; color: var(--primary); margin-bottom: 14px; margin-top: 4px; display: flex; align-items: center; gap: 8px; }
+  .mudanza-divider { border: none; border-top: 2px solid var(--border); margin: 20px 0; }
+  .info-box { background: #EEF2FF; border: 1px solid rgba(10,36,99,0.15); border-left: 4px solid var(--primary); border-radius: 8px; padding: 12px 16px; display: flex; gap: 10px; margin-bottom: 20px; font-size: 0.85rem; color: var(--dark); line-height: 1.5; }
+  .info-box-icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+  .piso-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 8px; }
+  @media (max-width: 500px) { .piso-row { grid-template-columns: 1fr; } }
+  .piso-block { background: var(--light); border-radius: 10px; padding: 14px; }
+  .piso-block-title { font-family: var(--font-display); font-size: 0.78rem; font-weight: 600; color: var(--gray); margin-bottom: 10px; }
+  .piso-block select, .piso-block input { width: 100%; padding: 9px 12px; border: 2px solid var(--border); border-radius: 8px; font-family: var(--font-body); font-size: 0.88rem; color: var(--dark); transition: border .2s; background: var(--white); }
+  .piso-block select:focus, .piso-block input:focus { outline: none; border-color: var(--primary); }
+
+  .ayudantes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+  .ayudante-opt {
+    border: 2px solid var(--border); border-radius: 10px; padding: 12px 8px;
+    text-align: center; cursor: pointer; transition: all .2s;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .ayudante-opt:hover { border-color: var(--primary); }
+  .ayudante-opt.selected { border-color: var(--primary); background: #EEF2FF; }
+  .ay-num { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; color: var(--primary); }
+  .ay-label { font-size: 0.68rem; color: var(--gray); font-weight: 500; }
+
+  /* ===== WA BUBBLE ===== */
+  .wa-bubble { position: fixed; bottom: 28px; right: 28px; z-index: 400; }
+  .wa-bubble-tooltip {
+    position: absolute; bottom: 100%; right: 0; margin-bottom: 10px;
+    background: var(--dark); color: #fff; padding: 8px 14px; border-radius: 8px;
+    font-size: 0.8rem; font-weight: 600; white-space: nowrap;
+    opacity: 0; transform: translateY(8px); pointer-events: none;
+    transition: all .25s; box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  }
+  .wa-bubble:hover .wa-bubble-tooltip { opacity: 1; transform: translateY(0); }
+  .wa-bubble-btn {
+    width: 62px; height: 62px; background: #25D366; border: none;
+    border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.45); transition: all .2s;
+    animation: waWiggle 3s ease-in-out infinite;
+  }
+  .wa-bubble-btn svg { width: 32px; height: 32px; fill: #fff; }
+  .wa-bubble-btn:hover { transform: scale(1.1); background: #1ebe5a; }
+  @keyframes waWiggle {
+    0%,92%,100% { transform: rotate(0deg); }
+    94% { transform: rotate(-12deg); }
+    96% { transform: rotate(12deg); }
+    98% { transform: rotate(-6deg); }
+  }
+
+  /* ===== TOAST ===== */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--primary); color: #fff; padding: 14px 28px; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 600; z-index: 500;
+    transition: transform .3s; border-left: 4px solid var(--accent);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25); white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 640px) {
+    .hero { padding: 60px 5% 70px; }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav>
+  <div class="nav-logo" onclick="goHome()">
+    <span class="logo-icon">🚛</span>
+    <span>Bazán</span>&nbsp;Logística
+  </div>
+  <div class="nav-links">
+    <a onclick="goHome(); scrollToSection('servicios')">Servicios</a>
+    <a onclick="goHome(); scrollToSection('como-funciona')">Cómo Funciona</a>
+    <a onclick="goHome(); scrollToSection('por-que')">Nosotros</a>
+    <a onclick="goHome(); scrollToSection('contacto')">Contacto</a>
+  </div>
+  <button class="nav-cta" onclick="abrirPresupuestoGeneral()">📋 Pedir Presupuesto</button>
+  <button class="nav-hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- ===== HOME PAGE ===== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">🏆 Empresa verificada · Paraguay</div>
+      <h1>
+        Tu carga,<br>
+        <span>nuestra</span><br>
+        <em>responsabilidad</em>
+      </h1>
+      <p>Fletes, mudanzas, grúas y transporte de carga en todo Paraguay. Coordinación ágil, vehículos en óptimas condiciones y precios justos.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="abrirPresupuestoGeneral()">📋 Solicitar Presupuesto</button>
+        <button class="btn-outline" onclick="scrollToSection('servicios')">Ver Servicios ↓</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-stats">
+        <div class="stat-card"><div class="stat-num">500+</div><div class="stat-label">Servicios realizados</div></div>
+        <div class="stat-card"><div class="stat-num">24/7</div><div class="stat-label">Disponibilidad</div></div>
+        <div class="stat-card"><div class="stat-num">100%</div><div class="stat-label">Verificados</div></div>
+        <div class="stat-card"><div class="stat-num">★4.9</div><div class="stat-label">Calificación</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-item"><span class="ti-icon">✅</span> Empresa verificada</div>
+    <div class="trust-item"><span class="ti-icon">📍</span> Cobertura Gran Asunción</div>
+    <div class="trust-item"><span class="ti-icon">💬</span> Respuesta en minutos</div>
+    <div class="trust-item"><span class="ti-icon">🛡️</span> Carga asegurada</div>
+    <div class="trust-item"><span class="ti-icon">🚀</span> Servicio urgente disponible</div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="servicios">
+    <div class="section-label">Nuestros Servicios</div>
+    <h2 class="section-title">Todo lo que necesitás mover</h2>
+    <p class="section-sub">Elegí el servicio y coordiná directamente en minutos por WhatsApp</p>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon-wrap">🚚</div>
+        <h3>Fletes y Transporte</h3>
+        <p>Traslado de mercadería, materiales de construcción, electrodomésticos y carga en general. Camiones de distintas capacidades disponibles.</p>
+        <div class="service-tags"><span class="tag">Carga general</span><span class="tag">Materiales</span><span class="tag">Mercadería</span></div>
+        <button class="btn-service" onclick="abrirMudanzaModal(null,'flete')">Solicitar flete</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">📦</div>
+        <h3>Mudanzas</h3>
+        <p>Mudanzas de hogares, departamentos y oficinas. Equipo de ayudantes disponibles, embalaje cuidadoso y puntualidad garantizada.</p>
+        <div class="service-tags"><span class="tag">Hogar</span><span class="tag">Oficina</span><span class="tag">Departamento</span></div>
+        <button class="btn-service" onclick="abrirMudanzaModal(null,'mudanza')">Solicitar mudanza</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">🏗️</div>
+        <h3>Servicio de Grúa</h3>
+        <p>Grúas para vehículos varados, traslado de maquinaria pesada, izaje industrial y emergencias en ruta. Respuesta rápida las 24 horas.</p>
+        <div class="service-tags"><span class="tag">Rescate</span><span class="tag">Maquinaria</span><span class="tag">Emergencias</span></div>
+        <button class="btn-service" onclick="abrirMudanzaModal(null,'grua')">Solicitar grúa</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">🚐</div>
+        <h3>Fletes Express</h3>
+        <p>Entregas urgentes y traslados rápidos en el día. Ideal para paquetes, documentos, repuestos y envíos que no pueden esperar.</p>
+        <div class="service-tags"><span class="tag">Urgente</span><span class="tag">Paquetes</span><span class="tag">Mismo día</span></div>
+        <button class="btn-service" onclick="abrirMudanzaModal(null,'express')">Solicitar express</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">🏭</div>
+        <h3>Logística para Empresas</h3>
+        <p>Soluciones logísticas para constructoras, industrias e importadoras. Contratos mensuales, facturación y seguimiento dedicado.</p>
+        <div class="service-tags"><span class="tag">Empresas</span><span class="tag">Constructoras</span><span class="tag">Industrias</span></div>
+        <button class="btn-service" onclick="openModal('Logística para Empresas','empresa')">Solicitar cotización</button>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon-wrap">🔧</div>
+        <h3>Traslado de Maquinaria</h3>
+        <p>Equipos industriales, maquinaria agrícola, generadores y cargas especiales de gran tonelaje. Gestión de permisos y escolta disponible.</p>
+        <div class="service-tags"><span class="tag">Industrial</span><span class="tag">Agrícola</span><span class="tag">Carga especial</span></div>
+        <button class="btn-service" onclick="openModal('Traslado de Maquinaria','maquinaria')">Solicitar servicio</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="como-funciona" class="how-section">
+    <div class="section-label" style="color:var(--accent)">Proceso</div>
+    <h2 class="section-title">¿Cómo funciona?</h2>
+    <p class="section-sub">En 4 pasos simples tenés tu servicio logístico coordinado</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h4>Elegí el servicio</h4>
+        <p>Seleccioná flete, mudanza, grúa o el servicio que necesitás.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h4>Completá el formulario</h4>
+        <p>Indicá origen, destino, tipo de carga y fecha requerida.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h4>Recibí tu presupuesto</h4>
+        <p>Te contactamos por WhatsApp con precio y disponibilidad en minutos.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h4>¡Listo, coordinamos!</h4>
+        <p>Confirmamos fecha, hora y el equipo sale a cumplir tu servicio.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section id="por-que" class="why-section">
+    <div class="section-label">Por Qué Elegirnos</div>
+    <h2 class="section-title">Comprometidos con tu carga</h2>
+    <p class="section-sub">Más que un servicio de transporte, somos tu socio logístico de confianza</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <span class="why-icon">⚡</span>
+        <h4>Respuesta Inmediata</h4>
+        <p>Contestamos en minutos por WhatsApp. Sin esperas, sin formularios complicados.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">📍</span>
+        <h4>Cobertura Total</h4>
+        <p>Operamos en todo el Gran Asunción y rutas nacionales. Llegamos donde necesitás.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🛡️</span>
+        <h4>Carga Responsable</h4>
+        <p>Tratamos cada encargo con máximo cuidado. Muebles, equipos y mercadería protegidos.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">💰</span>
+        <h4>Precios Justos</h4>
+        <p>Presupuesto claro, sin costos ocultos. Sabés lo que pagás antes de confirmar.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🕐</span>
+        <h4>Servicio 24/7</h4>
+        <p>Grúas y servicios urgentes disponibles todos los días, a cualquier hora.</p>
+      </div>
+      <div class="why-card">
+        <span class="why-icon">🤝</span>
+        <h4>Equipo Profesional</h4>
+        <p>Personal capacitado, vehículos en óptimas condiciones y seguimiento en tiempo real.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contacto">
+    <div class="footer-inner">
+      <div class="footer-logo">🚛 <span>Bazán</span> Logística</div>
+      <div class="footer-info">
+        Paraguay · Gran Asunción y rutas nacionales<br>
+        © 2025 Bazán Logística — Todos los derechos reservados
+      </div>
+      <div class="footer-contact">
+        <a class="footer-wa" href="https://wa.me/595981567166" target="_blank">
+          💬 +595 981 567 166
+        </a>
+        <span style="color:rgba(255,255,255,0.3);font-size:0.78rem;">Disponible 24/7</span>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /page-home -->
+
+
+<!-- ===== MODAL SOLICITUD (empresa / maquinaria) ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-header">
+      <h2>Solicitar — <span class="service-name" id="modalServiceName"></span></h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="tabs">
+        <button class="tab-btn active" id="tabBtnDomicilio" onclick="switchTab('domicilio',this)">Datos de contacto</button>
+        <button class="tab-btn" id="tabBtnServicio" onclick="switchTab('servicio',this)">Detalle del servicio</button>
+      </div>
+      <div class="tab-content active" id="tab-domicilio">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre completo *</label>
+            <input type="text" id="nombre" placeholder="Ej: Juan García">
+          </div>
+          <div class="form-group">
+            <label>Teléfono / WhatsApp *</label>
+            <input type="tel" id="telefono" placeholder="Ej: 0981 123 456">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Empresa / Organización</label>
+          <input type="text" id="empresa_nombre" placeholder="Ej: Constructora XYZ (opcional)">
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ciudad / Zona</label>
+            <input type="text" id="ciudad" placeholder="Ej: San Lorenzo">
+          </div>
+          <div class="form-group">
+            <label>Fecha requerida</label>
+            <input type="date" id="fechaServicio">
+          </div>
+        </div>
+        <div style="text-align:right;margin-top:8px;">
+          <button class="btn-primary" style="padding:11px 26px;font-size:0.9rem;" onclick="switchTab('servicio',document.getElementById('tabBtnServicio'))">Siguiente →</button>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-servicio">
+        <div class="form-group">
+          <label>Tipo de servicio específico</label>
+          <select id="tipoServicio"><option value="">Seleccioná una opción...</option></select>
+        </div>
+        <div class="form-group">
+          <label>Horario preferido</label>
+          <select id="horario">
+            <option value="">Seleccioná horario...</option>
+            <option>Mañana (8:00 - 12:00)</option>
+            <option>Tarde (13:00 - 18:00)</option>
+            <option>Urgente - Cuanto antes</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Descripción del trabajo</label>
+          <textarea id="descripcion" placeholder="Describí brevemente qué necesitás: tipo de carga, cantidad, condiciones especiales..."></textarea>
+        </div>
+        <button class="whatsapp-btn" onclick="enviarWhatsApp()">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Enviar solicitud por WhatsApp
+        </button>
+        <p class="modal-note">Nuestro equipo te contactará en minutos para confirmar disponibilidad y precio.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== MODAL MUDANZA / FLETE / GRÚA ===== -->
+<div class="mudanza-overlay" id="mudanzaOverlay" onclick="cerrarMudanzaOutside(event)">
+  <div class="mudanza-modal" id="mudanzaModal">
+    <div class="mudanza-modal-header">
+      <span class="service-emoji" id="mudanzaEmoji">🚚</span>
+      <h2 id="mudanzaTitulo">Solicitar Servicio</h2>
+      <button class="modal-close" onclick="cerrarMudanza()">✕</button>
+    </div>
+    <div class="mudanza-modal-body">
+
+      <div class="info-box">
+        <span class="info-box-icon">ℹ️</span>
+        <span>Completá los detalles para recibir un presupuesto exacto. Cuanto más detallado, más preciso el precio.</span>
+      </div>
+
+      <!-- DATOS PERSONALES -->
+      <div class="mudanza-section-title">👤 Tus datos</div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Nombre completo *</label>
+          <input type="text" id="mud-nombre" placeholder="Ej: Juan García">
+        </div>
+        <div class="form-group">
+          <label>Teléfono / WhatsApp *</label>
+          <input type="tel" id="mud-telefono" placeholder="Ej: 0981 123 456">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Fecha deseada</label>
+          <input type="date" id="mud-fecha">
+        </div>
+        <div class="form-group">
+          <label>Horario preferido</label>
+          <select id="mud-horario">
+            <option value="">Seleccioná horario...</option>
+            <option>Mañana (8:00 - 12:00)</option>
+            <option>Tarde (13:00 - 18:00)</option>
+            <option>Urgente - Cuanto antes</option>
+          </select>
+        </div>
+      </div>
+
+      <hr class="mudanza-divider">
+
+      <!-- ORIGEN -->
+      <div class="mudanza-section-title">📍 Lugar de origen</div>
+      <div class="form-group">
+        <label>Dirección de origen *</label>
+        <input type="text" id="mud-origen" placeholder="Ej: Av. Eusebio Ayala 1234, Asunción">
+      </div>
+
+      <!-- Piso origen - oculto para grúa -->
+      <div id="mud-pisos-origen-wrap">
+        <div class="piso-row">
+          <div class="piso-block">
+            <div class="piso-block-title">🏢 Piso de retiro</div>
+            <select id="mud-piso-origen">
+              <option value="PB">Planta baja</option>
+              <option value="1">1er piso</option>
+              <option value="2">2do piso</option>
+              <option value="3">3er piso</option>
+              <option value="4">4to piso</option>
+              <option value="5">5to o más</option>
+            </select>
+            <select id="mud-acceso-origen" style="margin-top:8px;">
+              <option value="">Acceso / Ascensor...</option>
+              <option>Tiene ascensor</option>
+              <option>Sin ascensor (escaleras)</option>
+              <option>Escalera estrecha</option>
+            </select>
+          </div>
+          <div class="piso-block">
+            <div class="piso-block-title">🚧 Dificultad de salida</div>
+            <select id="mud-dificultad-origen">
+              <option value="normal">Normal / Sin dificultad</option>
+              <option value="pasillo_angosto">Pasillo angosto</option>
+              <option value="puerta_angosta">Puerta pequeña</option>
+              <option value="sin_estacionamiento">Sin espacio para camión</option>
+              <option value="otra">Otra dificultad</option>
+            </select>
+            <input type="text" id="mud-dificultad-origen-detalle" placeholder="Detalle (opcional)" style="margin-top:8px;">
+          </div>
+        </div>
+      </div>
+
+      <hr class="mudanza-divider">
+
+      <!-- DESTINO -->
+      <div class="mudanza-section-title" id="mud-destino-titulo">🏁 Lugar de destino</div>
+      <div class="form-group">
+        <label id="mud-destino-label">Dirección de destino *</label>
+        <input type="text" id="mud-destino" placeholder="Ej: Ruta 2 Km. 18, Capiatá">
+      </div>
+
+      <!-- Piso destino - oculto para grúa -->
+      <div id="mud-pisos-destino-wrap">
+        <div class="piso-row">
+          <div class="piso-block">
+            <div class="piso-block-title">🏢 Piso de entrega</div>
+            <select id="mud-piso-destino">
+              <option value="PB">Planta baja</option>
+              <option value="1">1er piso</option>
+              <option value="2">2do piso</option>
+              <option value="3">3er piso</option>
+              <option value="4">4to o más</option>
+            </select>
+            <select id="mud-acceso-destino" style="margin-top:8px;">
+              <option value="">Acceso / Ascensor...</option>
+              <option>Tiene ascensor</option>
+              <option>Sin ascensor (escaleras)</option>
+              <option>Escalera estrecha</option>
+            </select>
+          </div>
+          <div class="piso-block">
+            <div class="piso-block-title">🚧 Dificultad de entrada</div>
+            <select id="mud-dificultad-destino">
+              <option value="normal">Normal / Sin dificultad</option>
+              <option value="pasillo_angosto">Pasillo angosto</option>
+              <option value="puerta_angosta">Puerta pequeña</option>
+              <option value="sin_estacionamiento">Sin espacio para camión</option>
+              <option value="otra">Otra dificultad</option>
+            </select>
+            <input type="text" id="mud-dificultad-destino-detalle" placeholder="Detalle (opcional)" style="margin-top:8px;">
+          </div>
+        </div>
+      </div>
+
+      <hr class="mudanza-divider">
+
+      <!-- TIPO DE VEHICULO -->
+      <div class="mudanza-section-title" id="mud-vehiculo-titulo">🚛 Tipo de vehículo</div>
+      <div class="form-group">
+        <select id="mud-vehiculo">
+          <option value="">Seleccioná un vehículo...</option>
+          <option value="furgon">Furgón pequeño (hasta 500 kg)</option>
+          <option value="camion_med">Camión mediano (hasta 3.000 kg)</option>
+          <option value="camion_grande">Camión grande (hasta 8.000 kg)</option>
+          <option value="semi">Semirremolque (más de 8.000 kg)</option>
+        </select>
+      </div>
+
+      <!-- AYUDANTES -->
+      <div class="mudanza-section-title" id="mud-ayudantes-titulo">👷 ¿Necesitás ayudantes?</div>
+      <div class="ayudantes-grid" id="mud-ayudantes-grid">
+        <div class="ayudante-opt selected" onclick="selAyudante(this,0)">
+          <span class="ay-num">0</span><span class="ay-label">Sin ayudantes</span>
+        </div>
+        <div class="ayudante-opt" onclick="selAyudante(this,1)">
+          <span class="ay-num">1</span><span class="ay-label">Ayudante</span>
+        </div>
+        <div class="ayudante-opt" onclick="selAyudante(this,2)">
+          <span class="ay-num">2</span><span class="ay-label">Ayudantes</span>
+        </div>
+        <div class="ayudante-opt" onclick="selAyudante(this,3)">
+          <span class="ay-num">3</span><span class="ay-label">Ayudantes</span>
+        </div>
+      </div>
+      <input type="hidden" id="mud-ayudantes-val" value="0">
+
+      <hr class="mudanza-divider">
+
+      <!-- DESCRIPCION -->
+      <div class="mudanza-section-title">📦 Descripción</div>
+      <div class="form-group">
+        <label id="mud-desc-label">Describí qué se va a mover o qué servicio necesitás</label>
+        <textarea id="mud-descripcion" placeholder="Ej: Hay 2 camas, heladera, muebles de living y varias cajas..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Observaciones adicionales</label>
+        <input type="text" id="mud-observacion" placeholder="Ej: portón chico, acceso difícil, urgente, etc.">
+      </div>
+
+      <button class="whatsapp-btn" onclick="enviarMudanzaWA()">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar solicitud por WhatsApp
+      </button>
+      <p class="modal-note">Bazán Logística te contactará en minutos con disponibilidad y presupuesto.</p>
+
+    </div>
+  </div>
+</div>
+
+<!-- WA BUBBLE -->
+<div class="wa-bubble">
+  <div class="wa-bubble-tooltip">💬 ¡Hablá con nosotros!</div>
+  <button class="wa-bubble-btn" onclick="abrirWABurbuja()" title="Contactar por WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </button>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ ¡Solicitud enviada! Gracias por contactarnos.</div>
+
+<script>
+const WA_NUMBER = '595981567166';
+
+// Service type configs for mudanza modal
+const serviceConfigs = {
+  flete: {
+    emoji: '🚚', titulo: 'Solicitar Flete',
+    showPisos: true, showAyudantes: true,
+    vehiculoOpts: [
+      '<option value="">Seleccioná vehículo...</option>',
+      '<option value="furgon">Furgón (hasta 500 kg)</option>',
+      '<option value="camion_med">Camión mediano (hasta 3.000 kg)</option>',
+      '<option value="camion_grande">Camión grande (hasta 8.000 kg)</option>',
+      '<option value="semi">Semirremolque (más de 8.000 kg)</option>',
+    ],
+    descLabel: 'Describí la carga: tipo, peso estimado, cantidad de bultos...',
+    descPlaceholder: 'Ej: Heladera doble puerta, 3 cajas grandes, mesa de madera...',
+    destinoLabel: 'Dirección de destino *',
+    vehiculoTitulo: '🚛 Tipo de vehículo requerido',
+  },
+  mudanza: {
+    emoji: '📦', titulo: 'Solicitar Mudanza',
+    showPisos: true, showAyudantes: true,
+    vehiculoOpts: [
+      '<option value="">Seleccioná vehículo...</option>',
+      '<option value="furgon">Furgón (hogar chico, 1-2 amb.)</option>',
+      '<option value="camion_med">Camión mediano (hogar 3 amb.)</option>',
+      '<option value="camion_grande">Camión grande (hogar completo)</option>',
+    ],
+    descLabel: 'Describí qué se va a mover (muebles, electrodomésticos, cajas...)',
+    descPlaceholder: 'Ej: 2 camas, heladera, lavarropas, mueble de living, aprox. 20 cajas...',
+    destinoLabel: 'Dirección de destino *',
+    vehiculoTitulo: '🚛 Tamaño del camión',
+  },
+  grua: {
+    emoji: '🏗️', titulo: 'Solicitar Grúa',
+    showPisos: false, showAyudantes: false,
+    vehiculoOpts: [
+      '<option value="">Seleccioná tipo de grúa...</option>',
+      '<option value="grua_liviana">Grúa liviana (autos, motos)</option>',
+      '<option value="grua_pesada">Grúa pesada (camiones, maquinaria)</option>',
+      '<option value="grua_pluma">Grúa pluma / izaje</option>',
+    ],
+    descLabel: 'Describí el vehículo o carga y la situación',
+    descPlaceholder: 'Ej: Auto Chevrolet Sail varado en ruta 2 km 20, sin gasolina...',
+    destinoLabel: 'Destino (taller, domicilio, etc.)',
+    vehiculoTitulo: '🏗️ Tipo de grúa requerida',
+  },
+  express: {
+    emoji: '🚐', titulo: 'Solicitar Flete Express',
+    showPisos: false, showAyudantes: false,
+    vehiculoOpts: [
+      '<option value="">Seleccioná vehículo...</option>',
+      '<option value="moto">Moto mensajería</option>',
+      '<option value="auto">Auto / Sedan</option>',
+      '<option value="furgon">Furgón express</option>',
+    ],
+    descLabel: 'Describí el paquete o carga',
+    descPlaceholder: 'Ej: 2 cajas pequeñas, documentos urgentes, repuesto industrial...',
+    destinoLabel: 'Dirección de entrega *',
+    vehiculoTitulo: '🚐 Vehículo',
+  },
+};
+
+let mudServiceType = 'flete';
+let mudAyudantesVal = 0;
+
+function abrirMudanzaModal(provider, tipo) {
+  mudServiceType = tipo || 'flete';
+  mudAyudantesVal = 0;
+  const cfg = serviceConfigs[mudServiceType] || serviceConfigs.flete;
+
+  document.getElementById('mudanzaEmoji').textContent = cfg.emoji;
+  document.getElementById('mudanzaTitulo').textContent = cfg.titulo;
+
+  // Reset form
+  ['mud-nombre','mud-telefono','mud-origen','mud-destino','mud-observacion','mud-descripcion',
+   'mud-dificultad-origen-detalle','mud-dificultad-destino-detalle'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  ['mud-piso-origen','mud-acceso-origen','mud-dificultad-origen',
+   'mud-piso-destino','mud-acceso-destino','mud-dificultad-destino',
+   'mud-horario'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.selectedIndex = 0;
+  });
+  document.querySelectorAll('#mud-ayudantes-grid .ayudante-opt').forEach((o,i) => {
+    o.classList.toggle('selected', i === 0);
+  });
+  document.getElementById('mud-ayudantes-val').value = 0;
+
+  // Pisos
+  document.getElementById('mud-pisos-origen-wrap').style.display = cfg.showPisos ? '' : 'none';
+  document.getElementById('mud-pisos-destino-wrap').style.display = cfg.showPisos ? '' : 'none';
+  // Ayudantes
+  document.getElementById('mud-ayudantes-titulo').parentElement && null;
+  const ayTit = document.getElementById('mud-ayudantes-titulo');
+  ayTit.style.display = cfg.showAyudantes ? '' : 'none';
+  document.getElementById('mud-ayudantes-grid').style.display = cfg.showAyudantes ? '' : 'none';
+
+  // Vehiculo options
+  const sel = document.getElementById('mud-vehiculo');
+  sel.innerHTML = cfg.vehiculoOpts.join('');
+  document.getElementById('mud-vehiculo-titulo').textContent = cfg.vehiculoTitulo;
+
+  // Labels
+  document.getElementById('mud-destino-label').textContent = cfg.destinoLabel;
+  document.getElementById('mud-desc-label').textContent = cfg.descLabel;
+  document.getElementById('mud-descripcion').placeholder = cfg.descPlaceholder;
+
+  document.getElementById('mudanzaOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarMudanza() {
+  document.getElementById('mudanzaOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function cerrarMudanzaOutside(e) {
+  if (e.target === document.getElementById('mudanzaOverlay')) cerrarMudanza();
+}
+function selAyudante(el, val) {
+  mudAyudantesVal = val;
+  document.querySelectorAll('#mud-ayudantes-grid .ayudante-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('mud-ayudantes-val').value = val;
+}
+
+function enviarMudanzaWA() {
+  const nombre = document.getElementById('mud-nombre').value.trim();
+  const telefono = document.getElementById('mud-telefono').value.trim();
+  const origen = document.getElementById('mud-origen').value.trim();
+  const destino = document.getElementById('mud-destino').value.trim();
+
+  if (!nombre || !telefono) {
+    alert('Por favor completá tu nombre y teléfono antes de enviar.');
+    return;
+  }
+
+  const cfg = serviceConfigs[mudServiceType] || serviceConfigs.flete;
+  let msg = `*SOLICITUD DE SERVICIO - Bazán Logística*\n`;
+  msg += `*Tipo:* ${cfg.titulo}\n\n`;
+  msg += `*👤 Datos del cliente*\n`;
+  msg += `*Nombre:* ${nombre}\n`;
+  msg += `*Teléfono:* ${telefono}\n`;
+
+  const fecha = document.getElementById('mud-fecha').value;
+  const horario = document.getElementById('mud-horario').value;
+  if (fecha) msg += `*Fecha deseada:* ${fecha}\n`;
+  if (horario) msg += `*Horario:* ${horario}\n`;
+
+  msg += `\n*📍 Origen:* ${origen || 'No especificado'}\n`;
+
+  if (cfg.showPisos) {
+    const pisoO = document.getElementById('mud-piso-origen').value;
+    const accesoO = document.getElementById('mud-acceso-origen').value;
+    const difO = document.getElementById('mud-dificultad-origen');
+    msg += `*Piso retiro:* ${pisoO === 'PB' ? 'Planta baja' : pisoO + 'er/mo piso'}\n`;
+    if (accesoO) msg += `*Acceso origen:* ${accesoO}\n`;
+    if (difO.value !== 'normal') msg += `*Dificultad salida:* ${difO.options[difO.selectedIndex].text}\n`;
+    const difODet = document.getElementById('mud-dificultad-origen-detalle').value.trim();
+    if (difODet) msg += `*Detalle:* ${difODet}\n`;
+  }
+
+  msg += `\n*🏁 Destino:* ${destino || 'No especificado'}\n`;
+
+  if (cfg.showPisos) {
+    const pisoD = document.getElementById('mud-piso-destino').value;
+    const accesoD = document.getElementById('mud-acceso-destino').value;
+    const difD = document.getElementById('mud-dificultad-destino');
+    msg += `*Piso entrega:* ${pisoD === 'PB' ? 'Planta baja' : pisoD + 'er/mo piso'}\n`;
+    if (accesoD) msg += `*Acceso destino:* ${accesoD}\n`;
+    if (difD.value !== 'normal') msg += `*Dificultad entrada:* ${difD.options[difD.selectedIndex].text}\n`;
+    const difDDet = document.getElementById('mud-dificultad-destino-detalle').value.trim();
+    if (difDDet) msg += `*Detalle:* ${difDDet}\n`;
+  }
+
+  const vehiculo = document.getElementById('mud-vehiculo');
+  if (vehiculo.value) msg += `\n*🚛 Vehículo:* ${vehiculo.options[vehiculo.selectedIndex].text}\n`;
+
+  if (cfg.showAyudantes) {
+    const ayLabel = mudAyudantesVal === 0 ? 'Sin ayudantes' : `${mudAyudantesVal} ayudante${mudAyudantesVal > 1 ? 's' : ''}`;
+    msg += `*Ayudantes:* ${ayLabel}\n`;
+  }
+
+  const desc = document.getElementById('mud-descripcion').value.trim();
+  const obs = document.getElementById('mud-observacion').value.trim();
+  if (desc) msg += `\n*📦 Descripción:* ${desc}\n`;
+  if (obs) msg += `*Observaciones:* ${obs}\n`;
+
+  msg += '\n_Enviado desde Bazán Logística_';
+
+  window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// General budget modal
+function abrirPresupuestoGeneral() {
+  abrirMudanzaModal(null, 'flete');
+}
+
+// Generic modal
+const serviceOptionsModal = {
+  empresa: ['Contrato de fletes mensuales','Logística de construcción','Distribución de mercadería','Transporte de materiales','Gestión logística integral','Solicitar cotización personalizada'],
+  maquinaria: ['Traslado de maquinaria agrícola','Traslado de maquinaria industrial','Traslado de generadores','Carga especial sobredimensionada','Izaje con grúa pluma','Traslado con escolta'],
+};
+let currentModalServiceType = '';
+
+function openModal(serviceName, serviceType) {
+  currentModalServiceType = serviceType;
+  document.getElementById('modalServiceName').textContent = serviceName;
+  const sel = document.getElementById('tipoServicio');
+  sel.innerHTML = '<option value="">Seleccioná una opción...</option>';
+  (serviceOptionsModal[serviceType] || []).forEach(opt => {
+    const o = document.createElement('option'); o.textContent = opt; sel.appendChild(o);
+  });
+  switchTab('domicilio', document.getElementById('tabBtnDomicilio'));
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); document.body.style.overflow = ''; }
+function closeModalOutside(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+function enviarWhatsApp() {
+  const nombre = document.getElementById('nombre').value.trim();
+  const telefono = document.getElementById('telefono').value.trim();
+  const ciudad = document.getElementById('ciudad').value.trim();
+  const empresa_n = document.getElementById('empresa_nombre').value.trim();
+  const tipoServicio = document.getElementById('tipoServicio').value;
+  const fecha = document.getElementById('fechaServicio').value;
+  const horario = document.getElementById('horario').value;
+  const descripcion = document.getElementById('descripcion').value.trim();
+  const servicio = document.getElementById('modalServiceName').textContent;
+
+  if (!nombre || !telefono) {
+    alert('Por favor completá tu nombre y teléfono antes de enviar.');
+    switchTab('domicilio', document.getElementById('tabBtnDomicilio'));
+    return;
+  }
+
+  let msg = '*SOLICITUD DE SERVICIO - Bazán Logística*\n\n';
+  msg += '*Servicio:* ' + servicio + '\n';
+  if (tipoServicio) msg += '*Tipo específico:* ' + tipoServicio + '\n';
+  msg += '\n*👤 Datos del cliente*\n';
+  msg += '*Nombre:* ' + nombre + '\n';
+  msg += '*Teléfono:* ' + telefono + '\n';
+  if (empresa_n) msg += '*Empresa:* ' + empresa_n + '\n';
+  if (ciudad) msg += '*Ciudad/Zona:* ' + ciudad + '\n';
+  msg += '\n*📅 Disponibilidad*\n';
+  if (fecha) msg += '*Fecha preferida:* ' + fecha + '\n';
+  if (horario) msg += '*Horario:* ' + horario + '\n';
+  if (descripcion) msg += '\n*📝 Descripción:* ' + descripcion + '\n';
+  msg += '\n_Enviado desde Bazán Logística_';
+
+  window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function abrirWABurbuja() {
+  const msg = '¡Hola! Quisiera solicitar información sobre los servicios de Bazán Logística.';
+  window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+}
+
+function goHome() {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-home').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function scrollToSection(id) {
+  setTimeout(() => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }, 100);
+}
+
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  if (links.style.display === 'flex') {
+    links.style.display = 'none';
+  } else {
+    links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:var(--primary);padding:20px 5%;gap:16px;z-index:200;border-top:2px solid var(--accent);';
+  }
+}
+
+// Toast
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+</script>
+</body>
+</html>
