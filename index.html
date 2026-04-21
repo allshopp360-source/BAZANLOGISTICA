@@ -221,6 +221,104 @@
   .why-card h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
   .why-card p { font-size: 0.85rem; color: var(--gray); line-height: 1.6; }
 
+  /* ===== MAPA UBICACION ===== */
+  .map-location-btn {
+    display: flex; align-items: center; gap: 8px;
+    background: #EEF2FF; border: 2px dashed var(--primary);
+    color: var(--primary); padding: 10px 16px; border-radius: 10px;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.85rem;
+    cursor: pointer; transition: all .2s; width: 100%; margin-top: 8px;
+  }
+  .map-location-btn:hover { background: var(--primary); color: #fff; border-style: solid; }
+  .map-location-btn.confirmed { background: #ECFDF5; border-color: var(--success); color: #065F46; border-style: solid; }
+  .map-location-btn .map-btn-icon { font-size: 1.1rem; flex-shrink: 0; }
+
+  .map-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7); z-index: 9999;
+    align-items: flex-end; justify-content: center;
+  }
+  .map-overlay.active { display: flex; }
+  .map-sheet {
+    background: #fff; width: 100%; max-width: 600px;
+    border-radius: 24px 24px 0 0; overflow: hidden;
+    max-height: 95vh; display: flex; flex-direction: column;
+    animation: slideUp .3s ease;
+  }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .map-sheet-header {
+    padding: 16px 20px 12px;
+    background: var(--primary); color: #fff;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .map-sheet-header h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; }
+  .map-sheet-header p { font-size: 0.78rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .map-close-btn {
+    background: rgba(255,255,255,0.15); border: none; color: #fff;
+    width: 34px; height: 34px; border-radius: 50%;
+    font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .map-search-bar {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: center;
+  }
+  .map-search-bar input {
+    flex: 1; border: 2px solid var(--border); border-radius: 10px;
+    padding: 10px 14px; font-family: var(--font-body); font-size: 0.9rem;
+    outline: none; transition: border .2s;
+  }
+  .map-search-bar input:focus { border-color: var(--primary); }
+  .map-search-bar button {
+    background: var(--primary); color: #fff; border: none;
+    padding: 10px 16px; border-radius: 10px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.82rem;
+    cursor: pointer; white-space: nowrap;
+  }
+  .map-container {
+    flex: 1; position: relative; min-height: 320px;
+  }
+  #map-iframe-origen, #map-iframe-destino {
+    width: 100%; height: 100%; min-height: 320px;
+    border: none;
+  }
+  .map-pin-overlay {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -100%);
+    font-size: 2.5rem; pointer-events: none;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+    z-index: 10;
+  }
+  .map-gps-btn {
+    position: absolute; bottom: 16px; right: 16px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 12px; padding: 10px 14px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.82rem;
+    cursor: pointer; display: flex; align-items: center; gap: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all .2s; z-index: 10;
+  }
+  .map-gps-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .map-coords-info {
+    padding: 10px 16px;
+    background: #F8F9FC;
+    border-top: 1px solid var(--border);
+    font-size: 0.78rem; color: var(--gray);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .map-coords-info span { font-weight: 600; color: var(--dark); }
+  .map-confirm-btn {
+    margin: 12px 16px 16px;
+    width: calc(100% - 32px);
+    background: var(--success); color: #fff; border: none;
+    padding: 14px; border-radius: 12px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: background .2s;
+  }
+  .map-confirm-btn:hover { background: #059669; }
+  .map-note-small { text-align: center; font-size: 0.75rem; color: var(--gray); padding: 0 16px 12px; }
+
   /* ===== FOOTER ===== */
   .footer { background: var(--primary); padding: 30px 5%; }
   .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
@@ -809,6 +907,10 @@
       <div class="form-group">
         <label>Dirección de origen *</label>
         <input type="text" id="mud-origen" placeholder="Ej: Av. Eusebio Ayala 1234, Asunción">
+        <button type="button" class="map-location-btn" id="map-btn-origen" onclick="abrirMapa('origen')">
+          <span class="map-btn-icon">🗺️</span>
+          <span id="map-btn-origen-text">Marcar ubicación exacta en el mapa</span>
+        </button>
       </div>
 
       <!-- Piso origen - oculto para grúa -->
@@ -852,6 +954,10 @@
       <div class="form-group">
         <label id="mud-destino-label">Dirección de destino *</label>
         <input type="text" id="mud-destino" placeholder="Ej: Ruta 2 Km. 18, Capiatá">
+        <button type="button" class="map-location-btn" id="map-btn-destino" onclick="abrirMapa('destino')">
+          <span class="map-btn-icon">🗺️</span>
+          <span id="map-btn-destino-text">Marcar ubicación exacta en el mapa</span>
+        </button>
       </div>
 
       <!-- Piso destino - oculto para grúa -->
@@ -942,6 +1048,74 @@
   </div>
 </div>
 
+<!-- ===== MAPA ORIGEN ===== -->
+<div class="map-overlay" id="mapOverlayOrigen">
+  <div class="map-sheet">
+    <div class="map-sheet-header">
+      <div>
+        <h3>📍 Ubicación de origen</h3>
+        <p>Mové el mapa para centrar el pin en tu ubicación exacta</p>
+      </div>
+      <button class="map-close-btn" onclick="cerrarMapa('origen')">✕</button>
+    </div>
+    <div class="map-search-bar">
+      <input type="text" id="map-search-origen" placeholder="Buscar dirección..." onkeydown="if(event.key==='Enter')buscarEnMapa('origen')">
+      <button onclick="buscarEnMapa('origen')">Buscar</button>
+    </div>
+    <div class="map-container" style="position:relative;">
+      <iframe id="map-iframe-origen"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-57.9,-25.5,-57.3,-25.1&layer=mapnik&marker=-25.286,-57.647"
+        style="width:100%;height:360px;border:none;"
+        loading="lazy"></iframe>
+      <div class="map-pin-overlay">📍</div>
+      <button class="map-gps-btn" onclick="usarGPS('origen')">
+        🎯 Mi ubicación
+      </button>
+    </div>
+    <div class="map-coords-info" id="map-coords-origen">
+      📌 Usá "Mi ubicación" o buscá tu dirección arriba
+    </div>
+    <button class="map-confirm-btn" onclick="confirmarUbicacion('origen')">
+      ✅ Confirmar ubicación de origen
+    </button>
+    <p class="map-note-small">La ubicación se compartirá con el equipo de Bazán Logística vía WhatsApp</p>
+  </div>
+</div>
+
+<!-- ===== MAPA DESTINO ===== -->
+<div class="map-overlay" id="mapOverlayDestino">
+  <div class="map-sheet">
+    <div class="map-sheet-header">
+      <div>
+        <h3>🏁 Ubicación de destino</h3>
+        <p>Mové el mapa para centrar el pin en la ubicación exacta</p>
+      </div>
+      <button class="map-close-btn" onclick="cerrarMapa('destino')">✕</button>
+    </div>
+    <div class="map-search-bar">
+      <input type="text" id="map-search-destino" placeholder="Buscar dirección..." onkeydown="if(event.key==='Enter')buscarEnMapa('destino')">
+      <button onclick="buscarEnMapa('destino')">Buscar</button>
+    </div>
+    <div class="map-container" style="position:relative;">
+      <iframe id="map-iframe-destino"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=-57.9,-25.5,-57.3,-25.1&layer=mapnik&marker=-25.286,-57.647"
+        style="width:100%;height:360px;border:none;"
+        loading="lazy"></iframe>
+      <div class="map-pin-overlay">📍</div>
+      <button class="map-gps-btn" onclick="usarGPS('destino')">
+        🎯 Mi ubicación
+      </button>
+    </div>
+    <div class="map-coords-info" id="map-coords-destino">
+      📌 Usá "Mi ubicación" o buscá tu dirección arriba
+    </div>
+    <button class="map-confirm-btn" onclick="confirmarUbicacion('destino')">
+      ✅ Confirmar ubicación de destino
+    </button>
+    <p class="map-note-small">La ubicación se compartirá con el equipo de Bazán Logística vía WhatsApp</p>
+  </div>
+</div>
+
 <!-- WA BUBBLE -->
 <div class="wa-bubble">
   <div class="wa-bubble-tooltip">💬 ¡Hablá con nosotros!</div>
@@ -1027,6 +1201,18 @@ function abrirMudanzaModal(provider, tipo) {
   mudAyudantesVal = 0;
   const cfg = serviceConfigs[mudServiceType] || serviceConfigs.flete;
 
+  // Reset mapa
+  mapaCoords = { origen: null, destino: null };
+  mapaMapLink = { origen: null, destino: null };
+  ['origen','destino'].forEach(t => {
+    const btn = document.getElementById('map-btn-' + t);
+    const txt = document.getElementById('map-btn-' + t + '-text');
+    if (btn) btn.classList.remove('confirmed');
+    if (txt) txt.textContent = 'Marcar ubicación exacta en el mapa';
+    const coordsEl = document.getElementById('map-coords-' + t);
+    if (coordsEl) coordsEl.innerHTML = '📌 Usá "Mi ubicación" o buscá tu dirección arriba';
+  });
+
   document.getElementById('mudanzaEmoji').textContent = cfg.emoji;
   document.getElementById('mudanzaTitulo').textContent = cfg.titulo;
 
@@ -1084,6 +1270,113 @@ function selAyudante(el, val) {
   document.getElementById('mud-ayudantes-val').value = val;
 }
 
+// ===== MAPA DE UBICACION EXACTA =====
+let mapaCoords = { origen: null, destino: null };
+let mapaMapLink = { origen: null, destino: null };
+
+function abrirMapa(tipo) {
+  document.getElementById('mapOverlay' + capitalizar(tipo)).classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarMapa(tipo) {
+  document.getElementById('mapOverlay' + capitalizar(tipo)).classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function capitalizar(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+function usarGPS(tipo) {
+  if (!navigator.geolocation) {
+    alert('Tu navegador no soporta geolocalización.');
+    return;
+  }
+  const btn = document.querySelector('#mapOverlay' + capitalizar(tipo) + ' .map-gps-btn');
+  btn.textContent = '⏳ Obteniendo...';
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      const lat = pos.coords.latitude.toFixed(6);
+      const lng = pos.coords.longitude.toFixed(6);
+      actualizarMapaConCoords(tipo, lat, lng);
+      btn.textContent = '🎯 Mi ubicación';
+    },
+    function(err) {
+      btn.textContent = '🎯 Mi ubicación';
+      if (err.code === 1) {
+        alert('Permiso de ubicación denegado. Por favor buscá tu dirección manualmente.');
+      } else {
+        alert('No se pudo obtener la ubicación. Intentá buscar la dirección.');
+      }
+    },
+    { timeout: 10000, enableHighAccuracy: true }
+  );
+}
+
+function actualizarMapaConCoords(tipo, lat, lng) {
+  const delta = 0.008;
+  const bbox = `${parseFloat(lng)-delta},${parseFloat(lat)-delta},${parseFloat(lng)+delta},${parseFloat(lat)+delta}`;
+  const url = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`;
+  document.getElementById('map-iframe-' + tipo).src = url;
+
+  mapaCoords[tipo] = { lat, lng };
+  mapaMapLink[tipo] = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`;
+
+  document.getElementById('map-coords-' + tipo).innerHTML =
+    `📌 Lat: <span>${lat}</span>, Lng: <span>${lng}</span> — <a href="${mapaMapLink[tipo]}" target="_blank" style="color:var(--primary);font-weight:600;">Ver en mapa ↗</a>`;
+}
+
+function buscarEnMapa(tipo) {
+  const query = document.getElementById('map-search-' + tipo).value.trim();
+  if (!query) return;
+
+  const searchEl = document.getElementById('map-search-' + tipo);
+  searchEl.disabled = true;
+  searchEl.placeholder = 'Buscando...';
+
+  fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Paraguay')}&limit=1`)
+    .then(r => r.json())
+    .then(data => {
+      searchEl.disabled = false;
+      searchEl.placeholder = 'Buscar dirección...';
+      if (data && data.length > 0) {
+        const lat = parseFloat(data[0].lat).toFixed(6);
+        const lng = parseFloat(data[0].lon).toFixed(6);
+        actualizarMapaConCoords(tipo, lat, lng);
+        // También actualizar el campo de texto con el nombre encontrado
+        const inputId = tipo === 'origen' ? 'mud-origen' : 'mud-destino';
+        if (!document.getElementById(inputId).value) {
+          document.getElementById(inputId).value = data[0].display_name.split(',').slice(0,3).join(',');
+        }
+      } else {
+        alert('No se encontró esa dirección. Intentá con otra búsqueda o usá "Mi ubicación".');
+      }
+    })
+    .catch(() => {
+      searchEl.disabled = false;
+      searchEl.placeholder = 'Buscar dirección...';
+      alert('Error al buscar. Verificá tu conexión a internet.');
+    });
+}
+
+function confirmarUbicacion(tipo) {
+  const coords = mapaCoords[tipo];
+  if (!coords) {
+    alert('Por favor primero usá "Mi ubicación" o buscá una dirección para marcar el pin.');
+    return;
+  }
+
+  // Marcar el botón como confirmado
+  const btn = document.getElementById('map-btn-' + tipo);
+  const textEl = document.getElementById('map-btn-' + tipo + '-text');
+  btn.classList.add('confirmed');
+  textEl.textContent = `✅ Ubicación marcada (${coords.lat}, ${coords.lng})`;
+
+  cerrarMapa(tipo);
+}
+
+// Incluir coordenadas en el mensaje de WhatsApp
+const _enviarMudanzaWAOriginal = enviarMudanzaWA;
+
 function enviarMudanzaWA() {
   const nombre = document.getElementById('mud-nombre').value.trim();
   const telefono = document.getElementById('mud-telefono').value.trim();
@@ -1108,6 +1401,9 @@ function enviarMudanzaWA() {
   if (horario) msg += `*Horario:* ${horario}\n`;
 
   msg += `\n*📍 Origen:* ${origen || 'No especificado'}\n`;
+  if (mapaCoords.origen) {
+    msg += `*📌 Ubicación exacta origen:* https://www.openstreetmap.org/?mlat=${mapaCoords.origen.lat}&mlon=${mapaCoords.origen.lng}#map=17/${mapaCoords.origen.lat}/${mapaCoords.origen.lng}\n`;
+  }
 
   if (cfg.showPisos) {
     const pisoO = document.getElementById('mud-piso-origen').value;
@@ -1121,6 +1417,9 @@ function enviarMudanzaWA() {
   }
 
   msg += `\n*🏁 Destino:* ${destino || 'No especificado'}\n`;
+  if (mapaCoords.destino) {
+    msg += `*📌 Ubicación exacta destino:* https://www.openstreetmap.org/?mlat=${mapaCoords.destino.lat}&mlon=${mapaCoords.destino.lng}#map=17/${mapaCoords.destino.lat}/${mapaCoords.destino.lng}\n`;
+  }
 
   if (cfg.showPisos) {
     const pisoD = document.getElementById('mud-piso-destino').value;
