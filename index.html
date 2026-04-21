@@ -235,89 +235,124 @@
 
   .map-overlay {
     display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,0.7); z-index: 9999;
+    background: rgba(0,0,0,0.75); z-index: 9999;
     align-items: flex-end; justify-content: center;
   }
   .map-overlay.active { display: flex; }
   .map-sheet {
-    background: #fff; width: 100%; max-width: 600px;
+    background: #fff; width: 100%; max-width: 620px;
     border-radius: 24px 24px 0 0; overflow: hidden;
-    max-height: 95vh; display: flex; flex-direction: column;
+    max-height: 96vh; display: flex; flex-direction: column;
     animation: slideUp .3s ease;
   }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   .map-sheet-header {
-    padding: 16px 20px 12px;
+    padding: 16px 20px 14px;
     background: var(--primary); color: #fff;
     display: flex; align-items: center; justify-content: space-between;
+    flex-shrink: 0;
   }
   .map-sheet-header h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; }
-  .map-sheet-header p { font-size: 0.78rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .map-sheet-header p { font-size: 0.76rem; color: rgba(255,255,255,0.65); margin-top: 3px; }
   .map-close-btn {
     background: rgba(255,255,255,0.15); border: none; color: #fff;
     width: 34px; height: 34px; border-radius: 50%;
     font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
+    flex-shrink: 0; transition: background .2s;
   }
-  .map-search-bar {
-    padding: 12px 16px;
+  .map-close-btn:hover { background: rgba(255,255,255,0.3); }
+
+  /* Opciones: GPS o manual */
+  .map-options-row {
+    display: flex; gap: 10px; padding: 12px 16px;
     border-bottom: 1px solid var(--border);
-    display: flex; gap: 8px; align-items: center;
+    flex-shrink: 0; background: #F8F9FC;
+  }
+  .map-opt-btn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
+    padding: 10px 12px; border-radius: 10px; border: 2px solid var(--border);
+    background: #fff; cursor: pointer; transition: all .2s;
+    font-family: var(--font-display); font-weight: 600; font-size: 0.82rem; color: var(--dark);
+  }
+  .map-opt-btn:hover { border-color: var(--primary); color: var(--primary); background: #EEF2FF; }
+  .map-opt-btn.active-opt { border-color: var(--primary); background: var(--primary); color: #fff; }
+  .map-opt-btn span.opt-icon { font-size: 1rem; }
+
+  .map-search-bar {
+    padding: 10px 14px; border-bottom: 1px solid var(--border);
+    display: flex; gap: 8px; align-items: center; flex-shrink: 0;
   }
   .map-search-bar input {
     flex: 1; border: 2px solid var(--border); border-radius: 10px;
-    padding: 10px 14px; font-family: var(--font-body); font-size: 0.9rem;
+    padding: 9px 13px; font-family: var(--font-body); font-size: 0.88rem;
     outline: none; transition: border .2s;
   }
   .map-search-bar input:focus { border-color: var(--primary); }
   .map-search-bar button {
     background: var(--primary); color: #fff; border: none;
-    padding: 10px 16px; border-radius: 10px;
+    padding: 9px 16px; border-radius: 10px;
     font-family: var(--font-display); font-weight: 700; font-size: 0.82rem;
-    cursor: pointer; white-space: nowrap;
+    cursor: pointer; white-space: nowrap; transition: background .2s;
   }
+  .map-search-bar button:hover { background: #0d1e4f; }
+
   .map-container {
-    flex: 1; position: relative; min-height: 320px;
+    flex: 1; position: relative; min-height: 300px; background: #e8eaed;
   }
-  #map-iframe-origen, #map-iframe-destino {
-    width: 100%; height: 100%; min-height: 320px;
-    border: none;
+  .map-container iframe {
+    width: 100%; height: 100%; min-height: 300px; border: none; display: block;
   }
-  .map-pin-overlay {
+  .map-pin-center {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -100%);
-    font-size: 2.5rem; pointer-events: none;
-    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
-    z-index: 10;
+    font-size: 2.6rem; pointer-events: none;
+    filter: drop-shadow(0 3px 8px rgba(0,0,0,0.45));
+    z-index: 10; transition: transform .15s;
   }
-  .map-gps-btn {
-    position: absolute; bottom: 16px; right: 16px;
+  .map-hint-banner {
+    position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+    background: rgba(10,36,99,0.88); color: #fff;
+    padding: 7px 16px; border-radius: 20px; font-size: 0.76rem; font-weight: 600;
+    white-space: nowrap; z-index: 10; pointer-events: none;
+    font-family: var(--font-display);
+  }
+  .map-gps-fab {
+    position: absolute; bottom: 14px; right: 14px;
     background: #fff; border: 2px solid var(--border);
-    border-radius: 12px; padding: 10px 14px;
-    font-family: var(--font-display); font-weight: 700; font-size: 0.82rem;
+    border-radius: 50px; padding: 9px 16px;
+    font-family: var(--font-display); font-weight: 700; font-size: 0.8rem;
     cursor: pointer; display: flex; align-items: center; gap: 6px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all .2s; z-index: 10;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.18); transition: all .2s; z-index: 10;
   }
-  .map-gps-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
-  .map-coords-info {
-    padding: 10px 16px;
-    background: #F8F9FC;
+  .map-gps-fab:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .map-click-hint {
+    position: absolute; bottom: 14px; left: 14px;
+    background: rgba(0,0,0,0.6); color: #fff;
+    padding: 7px 13px; border-radius: 10px; font-size: 0.74rem;
+    pointer-events: none; z-index: 10; font-family: var(--font-display); font-weight: 600;
+    max-width: 200px; line-height: 1.4;
+  }
+  .map-coords-bar {
+    padding: 9px 16px; background: #F8F9FC;
     border-top: 1px solid var(--border);
     font-size: 0.78rem; color: var(--gray);
-    display: flex; align-items: center; gap: 6px;
+    display: flex; align-items: center; gap: 6px; flex-shrink: 0;
+    min-height: 38px;
   }
-  .map-coords-info span { font-weight: 600; color: var(--dark); }
+  .map-coords-bar span { font-weight: 600; color: var(--dark); }
+  .map-coords-bar a { color: var(--primary); font-weight: 600; text-decoration: none; margin-left: auto; white-space: nowrap; }
+  .map-coords-bar a:hover { text-decoration: underline; }
   .map-confirm-btn {
-    margin: 12px 16px 16px;
+    margin: 12px 16px 14px;
     width: calc(100% - 32px);
     background: var(--success); color: #fff; border: none;
     padding: 14px; border-radius: 12px;
     font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
     cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-    transition: background .2s;
+    transition: background .2s; flex-shrink: 0;
   }
   .map-confirm-btn:hover { background: #059669; }
-  .map-note-small { text-align: center; font-size: 0.75rem; color: var(--gray); padding: 0 16px 12px; }
+  .map-note-small { text-align: center; font-size: 0.73rem; color: var(--gray); padding: 0 16px 12px; flex-shrink: 0; }
 
   /* ===== FOOTER ===== */
   .footer { background: var(--primary); padding: 30px 5%; }
@@ -1049,70 +1084,76 @@
 </div>
 
 <!-- ===== MAPA ORIGEN ===== -->
-<div class="map-overlay" id="mapOverlayOrigen">
+<div class="map-overlay" id="mapOverlayOrigen" onclick="cerrarMapaOutside(event,'origen')">
   <div class="map-sheet">
     <div class="map-sheet-header">
       <div>
         <h3>📍 Ubicación de origen</h3>
-        <p>Mové el mapa para centrar el pin en tu ubicación exacta</p>
+        <p>Buscá, tocá el mapa o usá tu GPS</p>
       </div>
       <button class="map-close-btn" onclick="cerrarMapa('origen')">✕</button>
     </div>
-    <div class="map-search-bar">
-      <input type="text" id="map-search-origen" placeholder="Buscar dirección..." onkeydown="if(event.key==='Enter')buscarEnMapa('origen')">
-      <button onclick="buscarEnMapa('origen')">Buscar</button>
-    </div>
-    <div class="map-container" style="position:relative;">
-      <iframe id="map-iframe-origen"
-        src="https://www.openstreetmap.org/export/embed.html?bbox=-57.9,-25.5,-57.3,-25.1&layer=mapnik&marker=-25.286,-57.647"
-        style="width:100%;height:360px;border:none;"
-        loading="lazy"></iframe>
-      <div class="map-pin-overlay">📍</div>
-      <button class="map-gps-btn" onclick="usarGPS('origen')">
-        🎯 Mi ubicación
+    <div class="map-options-row">
+      <button class="map-opt-btn active-opt" id="opt-search-origen" onclick="setMapMode('origen','search')">
+        <span class="opt-icon">🔍</span> Buscar
+      </button>
+      <button class="map-opt-btn" id="opt-click-origen" onclick="setMapMode('origen','click')">
+        <span class="opt-icon">👆</span> Tocar mapa
+      </button>
+      <button class="map-opt-btn" id="opt-gps-origen" onclick="usarGPS('origen')">
+        <span class="opt-icon">🎯</span> Mi GPS
       </button>
     </div>
-    <div class="map-coords-info" id="map-coords-origen">
-      📌 Usá "Mi ubicación" o buscá tu dirección arriba
+    <div class="map-search-bar" id="searchbar-origen">
+      <input type="text" id="map-search-origen" placeholder="Ej: Av. Eusebio Ayala, Asunción...">
+      <button onclick="buscarEnMapa('origen')">Buscar</button>
     </div>
-    <button class="map-confirm-btn" onclick="confirmarUbicacion('origen')">
-      ✅ Confirmar ubicación de origen
-    </button>
-    <p class="map-note-small">La ubicación se compartirá con el equipo de Bazán Logística vía WhatsApp</p>
+    <div class="map-container">
+      <div id="gmap-origen" style="width:100%;height:320px;"></div>
+      <div class="map-hint-banner" id="map-hint-origen">Arrastrá el pin o buscá tu dirección</div>
+      <button class="map-gps-fab" onclick="usarGPS('origen')" id="gps-fab-origen">🎯 Mi ubicación</button>
+      <div class="map-click-hint" id="click-hint-origen" style="display:none;">👆 Tocá cualquier punto del mapa para marcar</div>
+    </div>
+    <div class="map-coords-bar" id="map-coords-origen">📌 Elegí una ubicación para continuar</div>
+    <button class="map-confirm-btn" onclick="confirmarUbicacion('origen')">✅ Confirmar ubicación de origen</button>
+    <p class="map-note-small">El link de Google Maps se enviará con tu solicitud por WhatsApp</p>
   </div>
 </div>
 
 <!-- ===== MAPA DESTINO ===== -->
-<div class="map-overlay" id="mapOverlayDestino">
+<div class="map-overlay" id="mapOverlayDestino" onclick="cerrarMapaOutside(event,'destino')">
   <div class="map-sheet">
     <div class="map-sheet-header">
       <div>
         <h3>🏁 Ubicación de destino</h3>
-        <p>Mové el mapa para centrar el pin en la ubicación exacta</p>
+        <p>Buscá, tocá el mapa o usá tu GPS</p>
       </div>
       <button class="map-close-btn" onclick="cerrarMapa('destino')">✕</button>
     </div>
-    <div class="map-search-bar">
-      <input type="text" id="map-search-destino" placeholder="Buscar dirección..." onkeydown="if(event.key==='Enter')buscarEnMapa('destino')">
-      <button onclick="buscarEnMapa('destino')">Buscar</button>
-    </div>
-    <div class="map-container" style="position:relative;">
-      <iframe id="map-iframe-destino"
-        src="https://www.openstreetmap.org/export/embed.html?bbox=-57.9,-25.5,-57.3,-25.1&layer=mapnik&marker=-25.286,-57.647"
-        style="width:100%;height:360px;border:none;"
-        loading="lazy"></iframe>
-      <div class="map-pin-overlay">📍</div>
-      <button class="map-gps-btn" onclick="usarGPS('destino')">
-        🎯 Mi ubicación
+    <div class="map-options-row">
+      <button class="map-opt-btn active-opt" id="opt-search-destino" onclick="setMapMode('destino','search')">
+        <span class="opt-icon">🔍</span> Buscar
+      </button>
+      <button class="map-opt-btn" id="opt-click-destino" onclick="setMapMode('destino','click')">
+        <span class="opt-icon">👆</span> Tocar mapa
+      </button>
+      <button class="map-opt-btn" id="opt-gps-destino" onclick="usarGPS('destino')">
+        <span class="opt-icon">🎯</span> Mi GPS
       </button>
     </div>
-    <div class="map-coords-info" id="map-coords-destino">
-      📌 Usá "Mi ubicación" o buscá tu dirección arriba
+    <div class="map-search-bar" id="searchbar-destino">
+      <input type="text" id="map-search-destino" placeholder="Ej: Ruta 2 Km. 18, Capiatá...">
+      <button onclick="buscarEnMapa('destino')">Buscar</button>
     </div>
-    <button class="map-confirm-btn" onclick="confirmarUbicacion('destino')">
-      ✅ Confirmar ubicación de destino
-    </button>
-    <p class="map-note-small">La ubicación se compartirá con el equipo de Bazán Logística vía WhatsApp</p>
+    <div class="map-container">
+      <div id="gmap-destino" style="width:100%;height:320px;"></div>
+      <div class="map-hint-banner" id="map-hint-destino">Arrastrá el pin o buscá tu dirección</div>
+      <button class="map-gps-fab" onclick="usarGPS('destino')" id="gps-fab-destino">🎯 Mi ubicación</button>
+      <div class="map-click-hint" id="click-hint-destino" style="display:none;">👆 Tocá cualquier punto del mapa para marcar</div>
+    </div>
+    <div class="map-coords-bar" id="map-coords-destino">📌 Elegí una ubicación para continuar</div>
+    <button class="map-confirm-btn" onclick="confirmarUbicacion('destino')">✅ Confirmar ubicación de destino</button>
+    <p class="map-note-small">El link de Google Maps se enviará con tu solicitud por WhatsApp</p>
   </div>
 </div>
 
@@ -1270,13 +1311,28 @@ function selAyudante(el, val) {
   document.getElementById('mud-ayudantes-val').value = val;
 }
 
-// ===== MAPA DE UBICACION EXACTA =====
+// ===== MAPA DE UBICACION EXACTA (Google Maps) =====
 let mapaCoords = { origen: null, destino: null };
-let mapaMapLink = { origen: null, destino: null };
+const gmaps = { origen: null, destino: null };
+const gmarkers = { origen: null, destino: null };
+const gcenter = { lat: -25.2867, lng: -57.6470 };
+const mapMode = { origen: 'search', destino: 'search' };
+let gmapsLoaded = false;
+let gmapsPending = [];
+
+function initGoogleMaps() {
+  gmapsLoaded = true;
+  gmapsPending.forEach(fn => fn());
+  gmapsPending = [];
+}
+
+function capitalizar(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
 function abrirMapa(tipo) {
   document.getElementById('mapOverlay' + capitalizar(tipo)).classList.add('active');
   document.body.style.overflow = 'hidden';
+  // Cargar mapa al abrir
+  setTimeout(() => ensureMap(tipo), 100);
 }
 
 function cerrarMapa(tipo) {
@@ -1284,98 +1340,206 @@ function cerrarMapa(tipo) {
   document.body.style.overflow = '';
 }
 
-function capitalizar(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+function cerrarMapaOutside(e, tipo) {
+  if (e.target === document.getElementById('mapOverlay' + capitalizar(tipo))) cerrarMapa(tipo);
+}
+
+function ensureMap(tipo) {
+  if (!gmapsLoaded) {
+    gmapsPending.push(() => crearMapa(tipo));
+    if (!document.getElementById('gmaps-script')) {
+      const s = document.createElement('script');
+      s.id = 'gmaps-script';
+      s.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY&libraries=places&callback=initGoogleMaps';
+      s.async = true; s.defer = true;
+      document.head.appendChild(s);
+    }
+  } else if (!gmaps[tipo]) {
+    crearMapa(tipo);
+  } else {
+    // Ya existe, solo resize
+    google.maps.event.trigger(gmaps[tipo], 'resize');
+  }
+}
+
+function crearMapa(tipo) {
+  if (gmaps[tipo]) { google.maps.event.trigger(gmaps[tipo], 'resize'); return; }
+  const mapDiv = document.getElementById('gmap-' + tipo);
+  const map = new google.maps.Map(mapDiv, {
+    center: gcenter,
+    zoom: 13,
+    mapTypeControl: false,
+    streetViewControl: false,
+    fullscreenControl: false,
+    gestureHandling: 'greedy',
+    zoomControlOptions: { position: google.maps.ControlPosition.RIGHT_CENTER },
+  });
+  const marker = new google.maps.Marker({
+    position: gcenter,
+    map: map,
+    draggable: true,
+    animation: google.maps.Animation.DROP,
+  });
+  gmaps[tipo] = map;
+  gmarkers[tipo] = marker;
+
+  // Arrastrar marcador
+  marker.addListener('dragend', () => {
+    const pos = marker.getPosition();
+    actualizarCoords(tipo, pos.lat().toFixed(6), pos.lng().toFixed(6), true);
+  });
+
+  // Clic en mapa (modo click)
+  map.addListener('click', (e) => {
+    if (mapMode[tipo] === 'click') {
+      marker.setPosition(e.latLng);
+      map.panTo(e.latLng);
+      actualizarCoords(tipo, e.latLng.lat().toFixed(6), e.latLng.lng().toFixed(6), true);
+    }
+  });
+
+  // Autocomplete en input búsqueda
+  const input = document.getElementById('map-search-' + tipo);
+  const ac = new google.maps.places.Autocomplete(input, {
+    componentRestrictions: { country: 'py' },
+    fields: ['geometry', 'formatted_address', 'name'],
+  });
+  ac.addListener('place_changed', () => {
+    const place = ac.getPlace();
+    if (place.geometry && place.geometry.location) {
+      const lat = place.geometry.location.lat().toFixed(6);
+      const lng = place.geometry.location.lng().toFixed(6);
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+      marker.setPosition(place.geometry.location);
+      mapaCoords[tipo] = { lat, lng };
+      const addr = place.formatted_address || place.name;
+      document.getElementById('map-coords-' + tipo).innerHTML =
+        `📍 <span>${addr}</span> &nbsp;<a href="https://www.google.com/maps?q=${lat},${lng}" target="_blank">Ver ↗</a>`;
+      const campo = tipo === 'origen' ? 'mud-origen' : 'mud-destino';
+      if (!document.getElementById(campo).value) document.getElementById(campo).value = addr;
+    }
+  });
+}
+
+function actualizarCoords(tipo, lat, lng, doGeocode) {
+  mapaCoords[tipo] = { lat, lng };
+  const link = `https://www.google.com/maps?q=${lat},${lng}`;
+  document.getElementById('map-coords-' + tipo).innerHTML =
+    `📌 Lat: <span>${lat}</span>, Lng: <span>${lng}</span> &nbsp;<a href="${link}" target="_blank">Ver en Google Maps ↗</a>`;
+  if (doGeocode && window.google) {
+    new google.maps.Geocoder().geocode({ location: { lat: parseFloat(lat), lng: parseFloat(lng) } }, (res, st) => {
+      if (st === 'OK' && res[0]) {
+        const addr = res[0].formatted_address;
+        document.getElementById('map-coords-' + tipo).innerHTML =
+          `📍 <span>${addr}</span> &nbsp;<a href="${link}" target="_blank">Ver ↗</a>`;
+        const campo = tipo === 'origen' ? 'mud-origen' : 'mud-destino';
+        if (!document.getElementById(campo).value) document.getElementById(campo).value = addr;
+      }
+    });
+  }
+}
+
+function setMapMode(tipo, mode) {
+  mapMode[tipo] = mode;
+  ['search','click','gps'].forEach(m => {
+    const b = document.getElementById('opt-' + m + '-' + tipo);
+    if (b) b.classList.remove('active-opt');
+  });
+  const activeBtn = document.getElementById('opt-' + mode + '-' + tipo);
+  if (activeBtn) activeBtn.classList.add('active-opt');
+
+  const searchbar = document.getElementById('searchbar-' + tipo);
+  const clickHint = document.getElementById('click-hint-' + tipo);
+  const mapHint = document.getElementById('map-hint-' + tipo);
+
+  if (mode === 'search') {
+    searchbar.style.display = 'flex';
+    clickHint.style.display = 'none';
+    mapHint.style.display = 'block';
+    mapHint.textContent = 'Arrastrá el pin o buscá tu dirección arriba';
+  } else if (mode === 'click') {
+    searchbar.style.display = 'none';
+    clickHint.style.display = 'block';
+    mapHint.style.display = 'none';
+  }
+}
+
+function buscarEnMapa(tipo) {
+  const input = document.getElementById('map-search-' + tipo);
+  const query = input.value.trim();
+  if (!query || !window.google) return;
+  const geocoder = new google.maps.Geocoder();
+  input.disabled = true;
+  geocoder.geocode({ address: query + ', Paraguay' }, (res, st) => {
+    input.disabled = false;
+    if (st === 'OK' && res[0]) {
+      const loc = res[0].geometry.location;
+      const lat = loc.lat().toFixed(6);
+      const lng = loc.lng().toFixed(6);
+      if (gmaps[tipo]) {
+        gmaps[tipo].setCenter(loc);
+        gmaps[tipo].setZoom(16);
+        gmarkers[tipo].setPosition(loc);
+      }
+      actualizarCoords(tipo, lat, lng, false);
+      const addr = res[0].formatted_address;
+      document.getElementById('map-coords-' + tipo).innerHTML =
+        `📍 <span>${addr}</span> &nbsp;<a href="https://www.google.com/maps?q=${lat},${lng}" target="_blank">Ver ↗</a>`;
+      const campo = tipo === 'origen' ? 'mud-origen' : 'mud-destino';
+      if (!document.getElementById(campo).value) document.getElementById(campo).value = addr;
+    } else {
+      alert('No se encontró esa dirección. Intentá con más detalle.');
+    }
+  });
+}
 
 function usarGPS(tipo) {
-  if (!navigator.geolocation) {
-    alert('Tu navegador no soporta geolocalización.');
-    return;
-  }
-  const btn = document.querySelector('#mapOverlay' + capitalizar(tipo) + ' .map-gps-btn');
-  btn.textContent = '⏳ Obteniendo...';
+  if (!navigator.geolocation) { alert('Tu dispositivo no soporta GPS.'); return; }
+  const fab = document.getElementById('gps-fab-' + tipo);
+  if (fab) { fab.textContent = '⏳ Obteniendo...'; fab.disabled = true; }
   navigator.geolocation.getCurrentPosition(
-    function(pos) {
+    pos => {
       const lat = pos.coords.latitude.toFixed(6);
       const lng = pos.coords.longitude.toFixed(6);
-      actualizarMapaConCoords(tipo, lat, lng);
-      btn.textContent = '🎯 Mi ubicación';
+      const latlng = { lat: parseFloat(lat), lng: parseFloat(lng) };
+      ensureMap(tipo);
+      const doMove = () => {
+        if (gmaps[tipo]) {
+          gmaps[tipo].setCenter(latlng);
+          gmaps[tipo].setZoom(17);
+          gmarkers[tipo].setPosition(latlng);
+        }
+        actualizarCoords(tipo, lat, lng, true);
+        if (fab) { fab.textContent = '🎯 Mi ubicación'; fab.disabled = false; }
+      };
+      if (gmaps[tipo]) doMove();
+      else setTimeout(doMove, 1200);
     },
-    function(err) {
-      btn.textContent = '🎯 Mi ubicación';
-      if (err.code === 1) {
-        alert('Permiso de ubicación denegado. Por favor buscá tu dirección manualmente.');
-      } else {
-        alert('No se pudo obtener la ubicación. Intentá buscar la dirección.');
-      }
+    err => {
+      if (fab) { fab.textContent = '🎯 Mi ubicación'; fab.disabled = false; }
+      if (err.code === 1) alert('Permiso de GPS denegado. Podés buscar la dirección o tocar el mapa manualmente.');
+      else alert('No se pudo obtener el GPS. Usá la búsqueda o tocá el mapa.');
     },
     { timeout: 10000, enableHighAccuracy: true }
   );
 }
 
-function actualizarMapaConCoords(tipo, lat, lng) {
-  const delta = 0.008;
-  const bbox = `${parseFloat(lng)-delta},${parseFloat(lat)-delta},${parseFloat(lng)+delta},${parseFloat(lat)+delta}`;
-  const url = `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lng}`;
-  document.getElementById('map-iframe-' + tipo).src = url;
-
-  mapaCoords[tipo] = { lat, lng };
-  mapaMapLink[tipo] = `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=17/${lat}/${lng}`;
-
-  document.getElementById('map-coords-' + tipo).innerHTML =
-    `📌 Lat: <span>${lat}</span>, Lng: <span>${lng}</span> — <a href="${mapaMapLink[tipo]}" target="_blank" style="color:var(--primary);font-weight:600;">Ver en mapa ↗</a>`;
-}
-
-function buscarEnMapa(tipo) {
-  const query = document.getElementById('map-search-' + tipo).value.trim();
-  if (!query) return;
-
-  const searchEl = document.getElementById('map-search-' + tipo);
-  searchEl.disabled = true;
-  searchEl.placeholder = 'Buscando...';
-
-  fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query + ', Paraguay')}&limit=1`)
-    .then(r => r.json())
-    .then(data => {
-      searchEl.disabled = false;
-      searchEl.placeholder = 'Buscar dirección...';
-      if (data && data.length > 0) {
-        const lat = parseFloat(data[0].lat).toFixed(6);
-        const lng = parseFloat(data[0].lon).toFixed(6);
-        actualizarMapaConCoords(tipo, lat, lng);
-        // También actualizar el campo de texto con el nombre encontrado
-        const inputId = tipo === 'origen' ? 'mud-origen' : 'mud-destino';
-        if (!document.getElementById(inputId).value) {
-          document.getElementById(inputId).value = data[0].display_name.split(',').slice(0,3).join(',');
-        }
-      } else {
-        alert('No se encontró esa dirección. Intentá con otra búsqueda o usá "Mi ubicación".');
-      }
-    })
-    .catch(() => {
-      searchEl.disabled = false;
-      searchEl.placeholder = 'Buscar dirección...';
-      alert('Error al buscar. Verificá tu conexión a internet.');
-    });
-}
-
 function confirmarUbicacion(tipo) {
   const coords = mapaCoords[tipo];
   if (!coords) {
-    alert('Por favor primero usá "Mi ubicación" o buscá una dirección para marcar el pin.');
+    alert('Todavía no marcaste una ubicación. Buscá una dirección, tocá el mapa o usá tu GPS.');
     return;
   }
-
-  // Marcar el botón como confirmado
   const btn = document.getElementById('map-btn-' + tipo);
-  const textEl = document.getElementById('map-btn-' + tipo + '-text');
-  btn.classList.add('confirmed');
-  textEl.textContent = `✅ Ubicación marcada (${coords.lat}, ${coords.lng})`;
-
+  const txt = document.getElementById('map-btn-' + tipo + '-text');
+  if (btn) btn.classList.add('confirmed');
+  if (txt) {
+    const link = `https://www.google.com/maps?q=${coords.lat},${coords.lng}`;
+    txt.innerHTML = `✅ Ubicación marcada &nbsp;<a href="${link}" target="_blank" style="font-size:0.78rem;color:var(--primary);">Ver ↗</a>`;
+  }
   cerrarMapa(tipo);
 }
-
-// Incluir coordenadas en el mensaje de WhatsApp
-const _enviarMudanzaWAOriginal = enviarMudanzaWA;
 
 function enviarMudanzaWA() {
   const nombre = document.getElementById('mud-nombre').value.trim();
@@ -1402,7 +1566,7 @@ function enviarMudanzaWA() {
 
   msg += `\n*📍 Origen:* ${origen || 'No especificado'}\n`;
   if (mapaCoords.origen) {
-    msg += `*📌 Ubicación exacta origen:* https://www.openstreetmap.org/?mlat=${mapaCoords.origen.lat}&mlon=${mapaCoords.origen.lng}#map=17/${mapaCoords.origen.lat}/${mapaCoords.origen.lng}\n`;
+    msg += `*📌 Ubicación exacta:* https://www.google.com/maps?q=${mapaCoords.origen.lat},${mapaCoords.origen.lng}\n`;
   }
 
   if (cfg.showPisos) {
@@ -1418,7 +1582,7 @@ function enviarMudanzaWA() {
 
   msg += `\n*🏁 Destino:* ${destino || 'No especificado'}\n`;
   if (mapaCoords.destino) {
-    msg += `*📌 Ubicación exacta destino:* https://www.openstreetmap.org/?mlat=${mapaCoords.destino.lat}&mlon=${mapaCoords.destino.lng}#map=17/${mapaCoords.destino.lat}/${mapaCoords.destino.lng}\n`;
+    msg += `*📌 Ubicación exacta:* https://www.google.com/maps?q=${mapaCoords.destino.lat},${mapaCoords.destino.lng}\n`;
   }
 
   if (cfg.showPisos) {
